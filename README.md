@@ -7,6 +7,7 @@ Single deck blackjack game with the ability to bet and lose "money" vs the deale
 
 User Stories
 MVP Goals
+
 As a player I would like the game to have interactive input boxes and buttons.
 As a player I would like to be able to keep track of my money, as well as how much i've gained or lost.
 As a player I would like to be able to double down on my hand.
