@@ -1,6 +1,6 @@
 # Blackjack-Project-1
 
-*Project Description*
+**Project Description**
 Single deck blackjack game with the ability to bet and lose "money" vs the dealer. User starts off with set amount of money, can type in the bet amount and keep track of wins/losses.
 
 
