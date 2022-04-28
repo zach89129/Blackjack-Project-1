@@ -1,0 +1,48 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    min-height: 100vh;
+}
+
+/* .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.leftSide {
+    grid-column-start: 1;
+    flex-direction: column;
+}
+
+.playingField {
+    display: flex;
+    grid-column-start: 2;
+    flex-direction:  column;
+    align-content: space-between;
+    justify-content: center;
+    
+}
+
+#dealer {
+    font-size: 100px;
+}
+
+#player {
+   font-size: 100px;
+}
+
+.rightSide {
+    grid-column-start: 3;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: end
+}
+
+.sameSuit {
+    align-items: center;
+}
+
+
