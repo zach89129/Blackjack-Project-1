@@ -19,3 +19,4 @@ As a player I would like to know when I have won or lost
 Add decks up to 6 (standard blackjack) as well as have multiple players
 Have the game be able to take more than one player vs the dealer
 Have special rules/bets such as same suite or pairs for extra odds.
+Have a split option for pairs. 
