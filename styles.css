@@ -27,8 +27,11 @@ body {
 
 #dealer {
     font-size: 100px;
+    display: inline-block;
 }
-
+img {
+    max-height: 200px;
+}
 #player {
    font-size: 100px;
 }
