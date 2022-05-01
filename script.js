@@ -20,12 +20,18 @@ let standardBet = ""
 let splitBet = ""
 let pairsBet = ""
 let playerHand = []
+let playerHandValues = []
 playerHand = playerHand.flat()
 let dealerHand = []
+let dealerHandValues = []
 let playerHandPic = ""
 let dealerHandPic = ""
-let playerHandValue = 0
-let dealerHandValue = 0
+let playerHandInitial = 0
+let playerHandValue = playerHandValues.reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    playerHandInitial
+  );
+let dealerHandInitial = 0
 
 
 
@@ -36,7 +42,29 @@ document.querySelector(".dealCards").addEventListener("click", function(e){
 });
 
 
+let handCounter = function(){
+    playerHand = playerHand.flat()
+        console.log(playerHand)
+        playerHand.forEach(e => {
+            if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
+                playerHandValues.push(10)
+            } else if (e.value == "ACE" && playerHandValue < 10){
+                playerHandValues.push(11)
+            } else if (e.value == "ACE" && playerHandValue > 10) {
+                playerHandValues.push(1)
+            } else {
+                playerHandValues.push(parseInt(e.value))
+                // playerHandValues.splice(0, playerHandValues.length ,(parseInt(e.value)))
+            }
+        });
 
+        console.log(playerHandValues)
+
+        playerHandValue = playerHandValues.reduce(
+            (previousValue, currentValue) => previousValue + currentValue,
+            playerHandInitial
+          );
+}
 
 //on "Deal!" button press player gets handed 2 cards and dealer gets 1 facedown, 1 faceup. 
 let dealCards = function(){
@@ -51,9 +79,36 @@ let dealCards = function(){
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
+        // let playerHand = cards.cards
+        // return playerHand
         console.log(playerHand)
+        handCounter()
+        console.log(playerHandValue)
     })
     })
+    .then(() => {
+        fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
+    .then(response => response.json())
+    .then(cards => {
+        dealerHand.push(cards.cards)
+        console.log(dealerHand)
+        // playerHand.forEach(e => {
+        //     if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
+        //         playerHandValues.push(10)
+        //     // } else if ()
+        //     } else {
+        //     playerHandValues.push(parseInt(e.value))
+        //     }
+        // });
+        // let playerHandValue = playerHandValues.reduce(
+        //     (previousValue, currentValue) => previousValue + currentValue,
+        //     playerHandInitial
+        // );
+        // console.log(playerHandValue)
+        
+        
+})
+})
     console.log(wallet)
     
 }
@@ -66,22 +121,47 @@ let hitCard = function(){
     .then(cards => {
         playerHand.push(cards.cards)
         console.log(playerHand)
-        if(cards.cards.value == "KING" || cards.cards.value == "QUEEN" || cards.cards.value == "JACK"){
-            playerHandValue += 10
-        } else if(cards.cards.value == "ACE" && playerHandValue < 10){
-            playerHandValue += 11
-        } else if(cards.cards.value == "ACE" && playerHandValue > 10){
-            playerHandValue += 1
-        } else {
-            playerHandValue += parseInt(cards.cards.value)
-        }
+        handCounter()
         console.log(playerHandValue)
+        // playerHand = playerHand.flat()
+        // playerHand.forEach(e => {
+        //     if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
+        //         playerHandValues.push(10)
+        //     } else if (e.value == "ACE" && playerHandValue < 10){
+        //         playerHandValues.push(11)
+        //     } else if (e.value == "ACE" && playerHandValue > 10) {
+        //         playerHandValues.push(1)
+        //     } else {
+        //         playerHandValues.push(parseInt(e.value))
+        //     }
+        // });
+
+        // console.log(playerHandValues)
+
+        // let playerHandValue = playerHandValues.reduce(
+        //     (previousValue, currentValue) => previousValue + currentValue,
+        //     playerHandInitial
+        //   );
+        // console.log(playerHandValue)
+
+
+
+        // if(cards.cards.value == "KING" || cards.cards.value == "QUEEN" || cards.cards.value == "JACK"){
+        //     playerHandValue += 10
+        // } else if(cards.cards.value == "ACE" && playerHandValue < 10){
+        //     playerHandValue += 11
+        // } else if(cards.cards.value == "ACE" && playerHandValue > 10){
+        //     playerHandValue += 1
+        // } else {
+        //     playerHandValue += parseInt(cards.cards.value)
+        // }
+        // console.log(playerHandValue)
     })
 }
 
 
 document.querySelector(".drawCard").addEventListener("click", function(e){
-    if(playerHandValue < 21){
+    if(playerHandValue < 100){
         hitCard()
         console.log(playerHand)
     }
