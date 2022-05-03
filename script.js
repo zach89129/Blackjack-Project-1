@@ -14,7 +14,7 @@ let walletStart = function(){
     wallet = newWallet
 }
 
-
+//-----all needed global declaratios
 let deckId = ""
 let standardBet = ""
 let splitBet = ""
@@ -74,7 +74,7 @@ let handCounter = function(){
             } else {
                 playerHandValues.push(parseInt(lastCard.value))
             }
-            if (playerHandValues.includes(11) && (playerHandValue + lastCard.value) > 21){
+            if (playerHandValues.includes(11) && (playerHandValue + playerHandValues[playerHandValues.length -1]) > 21){
                 let popAce = playerHandValues.indexOf(11)
                 playerHandValues.splice(`${popAce}`, 1, 1)
             }
@@ -84,13 +84,14 @@ let handCounter = function(){
         //     let popAce = playerHandValues.indexOf(11)
         //     playerHandValues.splice(`${popAce}`, 1, 1)
         // }
+
         console.log(playerHand)
         console.log(playerHandValues)
 
         playerHandValue = playerHandValues.reduce(
             (previousValue, currentValue) => previousValue + currentValue,
             playerHandInitial
-          );
+        );
 
           console.log(playerHandValue)
 }
