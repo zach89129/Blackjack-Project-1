@@ -33,6 +33,7 @@ let playerHandValue = playerHandValues.reduce(
     playerHandInitial
   );
 let dealerHandInitial = 0
+let handValueHTML = document.getElementById("handValue")
 
 
 //------ this is the button that starts the game with the initial bets. 
@@ -93,6 +94,7 @@ let handCounter = function(){
             playerHandInitial
         );
 
+        handValueHTML.innerHTML = playerHandValue
           console.log(playerHandValue)
 }
 
