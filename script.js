@@ -1,14 +1,14 @@
-//Declarations
+//---- these three items set up the initial wallet as well as set the value of the wallet after betting. 
 let walletPrompt = prompt("How much money did you bring today?", "insert value here")
 document.querySelector("#walletValue").innerText = walletPrompt
 
-// let wallet = ""
+
 let wallet = document.querySelector("#walletValue")
 wallet.innerHTML = walletPrompt
 
+
 let walletStart = function(){
     let standardBet = document.querySelector("#playerBet").value
-    // console.log(standardBet)
     let newWallet = parseInt(wallet.innerText) - parseInt(standardBet);
     wallet.innerText = newWallet
     wallet = newWallet
@@ -24,8 +24,9 @@ let playerHandValues = []
 playerHand = playerHand.flat()
 let dealerHand = []
 let dealerHandValues = []
-let playerHandPic = ""
-let dealerHandPic = ""
+dealerHand = dealerHand.flat()
+// let playerHandPic = ""
+// let dealerHandPic = ""
 let playerHandInitial = 0
 let playerHandValue = playerHandValues.reduce(
     (previousValue, currentValue) => previousValue + currentValue,
@@ -34,14 +35,14 @@ let playerHandValue = playerHandValues.reduce(
 let dealerHandInitial = 0
 
 
-
+//------ this is the button that starts the game with the initial bets. 
 document.querySelector(".dealCards").addEventListener("click", function(e){
     e.preventDefault()
     walletStart()
     dealCards() 
 });
 
-
+//-----these two functions cycle through the first 2 cards of the hand and transfer the string to numerical values, they also grab the images from the array and push them to the html. 
 let handCounter = function(){
     playerHand = playerHand.flat()
         if (playerHand.length === 2){
@@ -73,8 +74,17 @@ let handCounter = function(){
             } else {
                 playerHandValues.push(parseInt(lastCard.value))
             }
+            if (playerHandValues.includes(11) && (playerHandValue + lastCard.value) > 21){
+                let popAce = playerHandValues.indexOf(11)
+                playerHandValues.splice(`${popAce}`, 1, 1)
+            }
         }
-        
+
+        // if (playerHandValues.includes(11) && (playerHandValue + lastCard.value) > 21){
+        //     let popAce = playerHandValues.indexOf(11)
+        //     playerHandValues.splice(`${popAce}`, 1, 1)
+        // }
+        console.log(playerHand)
         console.log(playerHandValues)
 
         playerHandValue = playerHandValues.reduce(
@@ -86,23 +96,11 @@ let handCounter = function(){
 }
 
 
-// let playerHandCalc = function(){
-//     playerHand.forEach(e => {
-//         if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
-//             playerHandValues.push(10)
-//         } else if (e.value == "ACE" && playerHandValue < 10){
-//             playerHandValues.push(11)
-//         } else if (e.value == "ACE" && playerHandValue > 10) {
-//             playerHandValues.push(1)
-//         } else {
-//             playerHandValues.push(parseInt(e.value))
-//             // playerHandValues.splice(0, playerHandValues.length ,(parseInt(e.value)))
-//         }
-//     });
-// }
 
 
-//on "Deal!" button press player gets handed 2 cards and dealer gets 1 facedown, 1 faceup. 
+
+//-----this function creates a deck from the API, grabs the deck id and then draws 2 cards for the player and 2 for the dealer. 
+
 let dealCards = function(){
     fetch('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
     .then(response => response.json())
@@ -130,7 +128,8 @@ let dealCards = function(){
 })})}
 
 
-//player draw tied to button, 3 different bet values to track.
+//------draws 1 card from deck and places in hand, then runse handcounter to get value
+
 let hitCard = function(){
     fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
     .then(response => response.json())
@@ -140,7 +139,7 @@ let hitCard = function(){
     })
 }
 
-
+//------runs above function on button press. 
 document.querySelector(".drawCard").addEventListener("click", function(e){
     if(playerHandValue < 100){
         hitCard()
