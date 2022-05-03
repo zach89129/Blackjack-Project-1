@@ -44,27 +44,63 @@ document.querySelector(".dealCards").addEventListener("click", function(e){
 
 let handCounter = function(){
     playerHand = playerHand.flat()
-        console.log(playerHand)
-        playerHand.forEach(e => {
-            if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
+        if (playerHand.length === 2){
+            playerHand.forEach(e => {
+                let cardImage = document.createElement('img')
+                cardImage.setAttribute("src", e.image)
+                document.querySelector('#playerHand').appendChild(cardImage)
+                if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
+                    playerHandValues.push(10)
+                } else if (e.value == "ACE" && (playerHandValue +11) > 21){
+                    playerHandValues.push(1)
+                } else if (e.value == "ACE" && (playerHandValue + 11) < 21) {
+                    playerHandValues.push(11)
+                } else {
+                    playerHandValues.push(parseInt(e.value))
+                }
+            })
+        } else if (playerHand.length > 2){
+            let lastCard = playerHand[playerHand.length -1]
+            let cardImage = document.createElement('img')
+                cardImage.setAttribute("src", lastCard.image)
+                document.querySelector('#playerHand').appendChild(cardImage)
+            if (lastCard.value == "KING" || lastCard.value == "QUEEN" || lastCard.value == "JACK"){
                 playerHandValues.push(10)
-            } else if (e.value == "ACE" && playerHandValue < 10){
-                playerHandValues.push(11)
-            } else if (e.value == "ACE" && playerHandValue > 10) {
+            } else if (lastCard.value == "ACE" && (playerHandValue +11) > 21){
                 playerHandValues.push(1)
+            } else if (lastCard.value == "ACE" && (playerHandValue + 11) < 21) {
+                playerHandValues.push(11)
             } else {
-                playerHandValues.push(parseInt(e.value))
-                // playerHandValues.splice(0, playerHandValues.length ,(parseInt(e.value)))
+                playerHandValues.push(parseInt(lastCard.value))
             }
-        });
-
+        }
+        
         console.log(playerHandValues)
 
         playerHandValue = playerHandValues.reduce(
             (previousValue, currentValue) => previousValue + currentValue,
             playerHandInitial
           );
+
+          console.log(playerHandValue)
 }
+
+
+// let playerHandCalc = function(){
+//     playerHand.forEach(e => {
+//         if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
+//             playerHandValues.push(10)
+//         } else if (e.value == "ACE" && playerHandValue < 10){
+//             playerHandValues.push(11)
+//         } else if (e.value == "ACE" && playerHandValue > 10) {
+//             playerHandValues.push(1)
+//         } else {
+//             playerHandValues.push(parseInt(e.value))
+//             // playerHandValues.splice(0, playerHandValues.length ,(parseInt(e.value)))
+//         }
+//     });
+// }
+
 
 //on "Deal!" button press player gets handed 2 cards and dealer gets 1 facedown, 1 faceup. 
 let dealCards = function(){
@@ -79,11 +115,7 @@ let dealCards = function(){
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
-        // let playerHand = cards.cards
-        // return playerHand
-        console.log(playerHand)
         handCounter()
-        console.log(playerHandValue)
     })
     })
     .then(() => {
@@ -92,26 +124,10 @@ let dealCards = function(){
     .then(cards => {
         dealerHand.push(cards.cards)
         console.log(dealerHand)
-        // playerHand.forEach(e => {
-        //     if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
-        //         playerHandValues.push(10)
-        //     // } else if ()
-        //     } else {
-        //     playerHandValues.push(parseInt(e.value))
-        //     }
-        // });
-        // let playerHandValue = playerHandValues.reduce(
-        //     (previousValue, currentValue) => previousValue + currentValue,
-        //     playerHandInitial
-        // );
-        // console.log(playerHandValue)
         
         
-})
-})
-    console.log(wallet)
-    
-}
+        
+})})}
 
 
 //player draw tied to button, 3 different bet values to track.
@@ -120,42 +136,7 @@ let hitCard = function(){
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
-        console.log(playerHand)
         handCounter()
-        console.log(playerHandValue)
-        // playerHand = playerHand.flat()
-        // playerHand.forEach(e => {
-        //     if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
-        //         playerHandValues.push(10)
-        //     } else if (e.value == "ACE" && playerHandValue < 10){
-        //         playerHandValues.push(11)
-        //     } else if (e.value == "ACE" && playerHandValue > 10) {
-        //         playerHandValues.push(1)
-        //     } else {
-        //         playerHandValues.push(parseInt(e.value))
-        //     }
-        // });
-
-        // console.log(playerHandValues)
-
-        // let playerHandValue = playerHandValues.reduce(
-        //     (previousValue, currentValue) => previousValue + currentValue,
-        //     playerHandInitial
-        //   );
-        // console.log(playerHandValue)
-
-
-
-        // if(cards.cards.value == "KING" || cards.cards.value == "QUEEN" || cards.cards.value == "JACK"){
-        //     playerHandValue += 10
-        // } else if(cards.cards.value == "ACE" && playerHandValue < 10){
-        //     playerHandValue += 11
-        // } else if(cards.cards.value == "ACE" && playerHandValue > 10){
-        //     playerHandValue += 1
-        // } else {
-        //     playerHandValue += parseInt(cards.cards.value)
-        // }
-        // console.log(playerHandValue)
     })
 }
 
@@ -163,8 +144,7 @@ let hitCard = function(){
 document.querySelector(".drawCard").addEventListener("click", function(e){
     if(playerHandValue < 100){
         hitCard()
-        console.log(playerHand)
-    }
+    } 
 })
 
 
