@@ -190,7 +190,6 @@ let dealCards = function(){
     fetch('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
     .then(response => response.json())
     .then(function(data){
-        console.log(data.deck_id)
         deckId = data.deck_id
     })
     .then(() => {
@@ -198,6 +197,7 @@ let dealCards = function(){
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
+        
         // if(playerHand[0].value == playerHand[1].value){
         //     wallet += (pairsBet *10)
         // }
@@ -217,11 +217,17 @@ let dealCards = function(){
         
 })})}
 
+//----continues to draw from deck without getting a new id
+
 let continueGameDeal = function(){
     fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
+        if(cards.remaining < 10){
+            alert("sorry, its time to reshuffle the deck!")
+            fetch(`http://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+        }
         handCounter()
         })
     .then(() => {
@@ -309,11 +315,11 @@ let dealerAutomation = function(){
     if(dealerHandValue >= 17 && dealerHandValue <= 21){
         if(dealerHandValue > playerHandValue){
             alert("Dealer wins, better luck next time!")
-            setTimeout(function(){ resetBoard() }, 1000);
+            setTimeout(function(){ resetBoard() }, 3000);
         } else if (playerHandValue > dealerHandValue){
             alert("Congrats!, you win!")
             wallet = wallet + (standardBet + (standardBet *1.5))
-            setTimeout(function(){ resetBoard() }, 1000);
+            setTimeout(function(){ resetBoard() }, 3000);
         }
     } else if (dealerHandValue < 17){
         dealerHit()
@@ -321,7 +327,7 @@ let dealerAutomation = function(){
     } else if (dealerHandValue >21){
         alert("Congrats!, you win!")
             wallet = wallet + (standardBet + (standardBet *1.5))
-            setTimeout(function(){ resetBoard() }, 1000);
+            setTimeout(function(){ resetBoard() }, 3000);
     }
     
     firstDraw.src = dealerHand[0].image
