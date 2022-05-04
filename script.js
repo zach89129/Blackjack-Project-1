@@ -15,22 +15,23 @@ let walletStart = function(){
     wallet.innerText = newWallet
     wallet = newWallet
     standardBet = parseInt(standardBet)
-    console.log(standardBet)
+    // console.log(standardBet)
     pairsBet = parseInt(pairsBet)
-    console.log(pairsBet)
+    // console.log(pairsBet)
     suitBet = parseInt(suitBet)
+    // console.log(wallet)
 }
 
 //-----bet functions
 
 let smallBets = function(){
     if(playerHand[0].value == playerHand[1].value){
-        wallet += (pairsBet *10)
+        wallet += pairsBet *10
         console.log(wallet)
         alert("You won your pairs odds!")
     }
     if(playerHand[0].suit == playerHand[1].suit){
-        wallet += (suitBet *6)
+        wallet += suitBet *6
         console.log(wallet)
         alert("You won your suit odds!")
     }
@@ -60,6 +61,8 @@ let dealerHandValue = dealerHandValues.reduce(
   );
 let handValueHTML = document.getElementById("handValue")
 
+let secondDraw = document.querySelector("#secondCard")
+let firstDraw = document.querySelector("#backOfCard")
 
 
 //------ this is the button that starts the game with the initial bets. 
@@ -69,15 +72,15 @@ document.querySelector(".dealCards").addEventListener("click", function(e){
         walletStart()
         dealCards() 
     } else {
-
+        walletStart()
+        continueGameDeal()
     }
-    
 });
+
 
 //-----these two functions cycle through the first 2 cards of the hand and transfer the string to numerical values, they also grab the images from the array and push them to the html. 
 let handCounter = function(){
     playerHand = playerHand.flat()
-    smallBets()
         if (playerHand.length === 2){
             playerHand.forEach(e => {
                 let cardImage = document.createElement('img')
@@ -85,9 +88,9 @@ let handCounter = function(){
                 document.querySelector('#playerHand').appendChild(cardImage)
                 if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
                     playerHandValues.push(10)
-                } else if (e.value == "ACE" && (playerHandValue +11) > 21){
-                    playerHandValues.push(1)
-                } else if (e.value == "ACE" && (playerHandValue + 11) < 21) {
+                // } else if (e.value == "ACE" && (playerHandValue +11) > 21){
+                //     playerHandValues.push(1)
+                } else if (e.value == "ACE") {
                     playerHandValues.push(11)
                 } else {
                     playerHandValues.push(parseInt(e.value))
@@ -129,9 +132,9 @@ let handCounter = function(){
 //------same as above function but for dealer hand
 let dealerHandCounter = function(){
     dealerHand = dealerHand.flat()
-    let firstDraw = document.querySelector("#backOfCard")
+    // let firstDraw = document.querySelector("#backOfCard")
     firstDraw.setAttribute("src", "https://i.pinimg.com/originals/25/42/c7/2542c7e8c0dad988ed003eb2218dc268.jpg")
-    let secondDraw = document.querySelector("#secondCard")
+    // let secondDraw = document.querySelector("#secondCard")
     secondDraw.setAttribute("src", dealerHand[1].image)
         if (dealerHand.length === 2){
             dealerHand.forEach(e => {
@@ -149,7 +152,7 @@ let dealerHandCounter = function(){
             let lastCard = dealerHand[dealerHand.length -1]
             let cardImage = document.createElement('img')
                 cardImage.setAttribute("src", lastCard.image)
-                document.querySelector('#dealerHand').appendChild(cardImage)
+                document.querySelector('#drawCards').appendChild(cardImage)
             if (lastCard.value == "KING" || lastCard.value == "QUEEN" || lastCard.value == "JACK"){
                 dealerHandValues.push(10)
             } else if (lastCard.value == "ACE" && (dealerHandValue +11) > 21){
@@ -219,12 +222,6 @@ let continueGameDeal = function(){
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
-        if(playerHand[0].value == playerHand[1].value){
-            wallet += (pairsBet *10)
-        }
-        if(playerHand[0].suit == playerHand[1].suit){
-            wallet += (suitBet *6)
-        }
         handCounter()
         })
     .then(() => {
@@ -244,13 +241,52 @@ let hitCard = function(){
         handCounter()
         if (playerHandValue > 21){
             setTimeout(function(){ alert("BUST!"); }, 1000);
-           //----create a function to "reset" game 
+            setTimeout(function(){ resetBoard() }, 3000);
         } 
     })
     
 }
 
-//------runs above function on button press. 
+let dealerHit = function(){
+    fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
+    .then(response => response.json())
+    .then(cards => {
+        dealerHand.push(cards.cards)
+        dealerHandCounter()
+    })
+        
+}
+
+
+//-----reset game function
+function clearBox(elementID)
+{
+    document.getElementById(elementID).innerHTML = "";
+}
+
+
+let resetBoard = function(){
+    pairsBet = 0
+    suitBet = 0
+    standardBet = 0
+    handValueHTML.innerHTML = ''
+    playerHand = []
+    dealerHand = []
+    playerHandValues = []
+    dealerHandValues = []
+    clearHTML()
+}
+
+let clearHTML = function(){
+    // let handHTML = document.querySelectorAll("img")
+    clearBox("playerHand")
+    clearBox("drawCards")
+    firstDraw.src = ""
+    secondDraw.src = ""
+}
+
+
+//------runs function on button press. 
 document.querySelector(".drawCard").addEventListener("click", function(e){
     if(playerHandValue < 21){
         hitCard()
@@ -258,13 +294,38 @@ document.querySelector(".drawCard").addEventListener("click", function(e){
 })
 
 
-
+document.querySelector(".finishTurn").addEventListener("click", function(e){
+    e.preventDefault()
+    smallBets()
+    dealerAutomation()
+})
 //pairs and same suit will be ran immediately after first deal, if not hit then they are cleared. 
 
 //player can press hit until they choose to end turn with end turn button, or draw over 21 and lose. 
 
 //after player presses end turn, the dealer will proceed with their turn drawing until soft 17. 
-
+let dealerAutomation = function(){
+    
+    if(dealerHandValue >= 17 && dealerHandValue <= 21){
+        if(dealerHandValue > playerHandValue){
+            alert("Dealer wins, better luck next time!")
+            setTimeout(function(){ resetBoard() }, 1000);
+        } else if (playerHandValue > dealerHandValue){
+            alert("Congrats!, you win!")
+            wallet = wallet + (standardBet + (standardBet *1.5))
+            setTimeout(function(){ resetBoard() }, 1000);
+        }
+    } else if (dealerHandValue < 17){
+        dealerHit()
+        setTimeout(function(){ dealerAutomation() }, 1000);
+    } else if (dealerHandValue >21){
+        alert("Congrats!, you win!")
+            wallet = wallet + (standardBet + (standardBet *1.5))
+            setTimeout(function(){ resetBoard() }, 1000);
+    }
+    
+    firstDraw.src = dealerHand[0].image
+}
 // if player wins, they get 3:2 odds back and money is returned to wallet. If dealer wins then player loses money and board is reset. 
 
 
