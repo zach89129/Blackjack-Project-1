@@ -1,27 +1,34 @@
-//---- these three items set up the initial wallet as well as set the value of the wallet after betting. 
-let walletPrompt = prompt("How much money did you bring today?", "insert value here")
-document.querySelector("#walletValue").innerText = walletPrompt
+// //---- these three items set up the initial wallet as well as set the value of the wallet after betting. 
+// let walletPrompt = prompt("How much money did you bring today?", "insert value here")
+// document.querySelector("#walletValue").innerText = walletPrompt
 
 
-let wallet = document.querySelector("#walletValue")
-wallet.innerHTML = walletPrompt
+// let wallet = document.querySelector("#walletValue")
+// wallet.innerHTML = walletPrompt
 
-///----------=======----------
+// ///----------=======----------
 let walletStart = function(){
-    let standardBet = document.querySelector("#playerBet").value
-    let pairsBet = document.querySelector("#pairs").value
-    let suitBet = document.querySelector("#sameSuit").value
-    let newWallet = parseInt(wallet.innerText) - parseInt(standardBet) - parseInt(suitBet) - parseInt(pairsBet);
-    wallet.innerText = newWallet
-    wallet = newWallet
+    standardBet = document.querySelector("#playerBet").value
+    pairsBet = document.querySelector("#pairs").value
+    suitBet = document.querySelector("#sameSuit").value
+    // let newWallet = parseInt(wallet.innerText) - parseInt(standardBet) - parseInt(suitBet) - parseInt(pairsBet);
+    // wallet.innerText = newWallet
+    // wallet = newWallet
+    // console.log(newWallet)
+    // console.log(wallet)
     standardBet = parseInt(standardBet)
-    // console.log(standardBet)
+    console.log(standardBet)
     pairsBet = parseInt(pairsBet)
     // console.log(pairsBet)
     suitBet = parseInt(suitBet)
-    // console.log(wallet)
-}
 
+
+    wallet -= standardBet + suitBet + pairsBet
+    console.log(wallet)
+    return standardBet
+}
+let wallet = 20000
+document.querySelector("#walletValue").innerText = wallet
 //-----bet functions
 
 let smallBets = function(){
@@ -40,9 +47,9 @@ let smallBets = function(){
 
 //-----all needed global declaratios
 let deckId = ""
-let standardBet = ""
-let suitBet = ""
-let pairsBet = ""
+let standardBet 
+let suitBet  
+let pairsBet 
 let playerHand = []
 let playerHandValues = []
 playerHand = playerHand.flat()
@@ -227,6 +234,7 @@ let continueGameDeal = function(){
         if(cards.remaining < 10){
             alert("sorry, its time to reshuffle the deck!")
             fetch(`http://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+            continueGameDeal()
         }
         handCounter()
         })
@@ -311,22 +319,34 @@ document.querySelector(".finishTurn").addEventListener("click", function(e){
 
 //after player presses end turn, the dealer will proceed with their turn drawing until soft 17. 
 let dealerAutomation = function(){
-    
+
     if(dealerHandValue >= 17 && dealerHandValue <= 21){
         if(dealerHandValue > playerHandValue){
             alert("Dealer wins, better luck next time!")
             setTimeout(function(){ resetBoard() }, 3000);
         } else if (playerHandValue > dealerHandValue){
             alert("Congrats!, you win!")
+            console.log(wallet)
+            console.log(standardBet)
             wallet = wallet + (standardBet + (standardBet *1.5))
+            console.log(wallet)
+            console.log(standardBet)
             setTimeout(function(){ resetBoard() }, 3000);
+        } else if (playerHandValue == dealerHandValue){
+            wallet = wallet + standardBet
+            alert("You tied with the dealer")
+            setTimeout(function(){ resetBoard() }, 3000)
         }
     } else if (dealerHandValue < 17){
         dealerHit()
         setTimeout(function(){ dealerAutomation() }, 1000);
     } else if (dealerHandValue >21){
         alert("Congrats!, you win!")
+            console.log(wallet)
+            console.log(standardBet)
             wallet = wallet + (standardBet + (standardBet *1.5))
+            console.log(wallet)
+            console.log(standardBet)
             setTimeout(function(){ resetBoard() }, 3000);
     }
     
