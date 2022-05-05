@@ -46,30 +46,32 @@
                 </div>
             </div>
 
-            <div id="playerHand"></div>
+            <div id="playerHand">
+
+            </div>
 
 
 
         <h1 id="player">Player</h1>
-        <h3 id="handValue"></h3>
+        <!-- <h3 id="handValue"></h3> -->
     </div>
 
 <!-- Right side -->
 
     <aside class="rightSide">
         <form action="/action_page.php">
-            <input type="text" id="sameSuit" name="sameSuit" value="0">
+            <div><input type="text" id="sameSuit" name="sameSuit" value="0">
             <label for="sameSuit">Same Suit 6:1</label>
             <input type="text" id="pairs" name="pairs" value="0">
             <label for="pairs"> Pairs 10:1</label>
             <input type="text" id="playerBet" name="playerBet" value="0">
-            <label for="playerBet">Players Bet</label>
+            <label for="playerBet">Players Bet</label></div>
             <input class="dealCards" type="submit" value="Deal!">
         </form>
         <button class="drawCard"> Hit Me!</button>  
         <button class="finishTurn">Stay 🙏 </button>
         <button class="doubleDown">Double Down!</button>  
-        <button class="split">Split!</button>
+        <!-- <button class="split">Split!</button> -->
 
     </aside>
 

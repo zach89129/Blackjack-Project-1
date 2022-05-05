@@ -1,6 +1,6 @@
 body {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
     grid-template-rows: 1fr;
     min-height: 100vh;
 }
@@ -14,38 +14,63 @@ body {
 .leftSide {
     grid-column-start: 1;
     flex-direction: column;
+    display: flex;
+    justify-content: end;
+    align-items: center ;
 }
 
 .playingField {
     display: flex;
     grid-column-start: 2;
     flex-direction:  column;
-    align-content: space-between;
-    justify-content: center;
+    justify-content: space-between;
     
 }
 
 #dealer {
     font-size: 100px;
     display: inline-block;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 2px;
+    
 }
 img {
     max-height: 200px;
 }
 #player {
    font-size: 100px;
+   text-align: center;
+   margin-top: 0px;
+   margin-bottom: 5px;
 }
 
 .rightSide {
     grid-column-start: 3;
     flex-direction: column;
     display: flex;
-    align-items: center;
-    justify-content: end
+    align-items: left;
+    justify-content: end;
 }
 
 .sameSuit {
     align-items: center;
 }
 
+
+#playerHand {
+    display: flex;
+    justify-content: center;
+}
+
+
+#dealerHand {
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
 
