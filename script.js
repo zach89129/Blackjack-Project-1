@@ -374,5 +374,12 @@ let fixWallet = function(){
     }
 }
 
+//------double down
 
+let doubleDown = document.querySelector(".doubleDown").addEventListener("click", function(e){
+    standardBet += standardBet
+    hitCard()
+    dealerAutomation()
+    return standardBet
+})
 

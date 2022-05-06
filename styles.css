@@ -68,6 +68,7 @@ img {
     grid-column-start: 3;
     flex-direction: column;
     display: flex;
+    align-items: left;
     justify-content: end;
     background-color: rgb(121, 117, 117, 0.9);
     box-shadow:0 0 15px 4px rgba(0, 0, 0, 0.76)
@@ -97,6 +98,7 @@ button:hover {
     background-color: #a23535f5;
     color: white;
 }
+
 input[type=submit]{
     box-shadow:0 0 15px 4px rgba(59, 56, 56, 0.76);
     margin: 3px;
@@ -106,10 +108,12 @@ input[type=submit]{
     border: none;
     font-family: 'Bangers', cursive;
 }
+
 input[type=submit]:hover {
     background-color: #a23535f5; 
     color: white;
 }
+
 #dealerHand {
     display: flex;
     justify-content: center;
