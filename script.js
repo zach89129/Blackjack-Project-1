@@ -187,13 +187,13 @@ let dealerHandCounter = function(){
 //-----this function creates a deck from the API, grabs the deck id and then draws 2 cards for the player and 2 for the dealer. 
 
 let dealCards = function(){
-    fetch('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+    fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
     .then(response => response.json())
     .then(function(data){
         deckId = data.deck_id
     })
     .then(() => {
-            fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
+            fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
@@ -209,7 +209,7 @@ let dealCards = function(){
     })
     })
     .then(() => {
-        fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
+        fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     .then(response => response.json())
     .then(cards => {
         dealerHand.push(cards.cards)
@@ -220,13 +220,13 @@ let dealCards = function(){
 //----continues to draw from deck without getting a new id
 
 let continueGameDeal = function(){
-    fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
+    fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     .then(response => response.json())
     .then(cards => {
         
         if(cards.remaining < 12){
             alert("sorry, its time to reshuffle the deck!")
-            fetch(`http://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+            fetch(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
             continueGameDeal()
         } else {
         playerHand.push(cards.cards)
@@ -234,7 +234,7 @@ let continueGameDeal = function(){
         }
         })
     .then(() => {
-        fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
+        fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     .then(response => response.json())
     .then(cards => {
         dealerHand.push(cards.cards)
@@ -243,7 +243,7 @@ let continueGameDeal = function(){
 //------draws 1 card from deck and places in hand, then runse handcounter to get value
 
 let hitCard = function(){
-    fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
+    fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
     .then(response => response.json())
     .then(cards => {
         playerHand.push(cards.cards)
@@ -257,7 +257,7 @@ let hitCard = function(){
 }
 
 let dealerHit = function(){
-    fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
+    fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
     .then(response => response.json())
     .then(cards => {
         dealerHand.push(cards.cards)
