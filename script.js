@@ -11,20 +11,13 @@ let walletStart = function(){
     standardBet = document.querySelector("#playerBet").value
     pairsBet = document.querySelector("#pairs").value
     suitBet = document.querySelector("#sameSuit").value
-    // let newWallet = parseInt(wallet.innerText) - parseInt(standardBet) - parseInt(suitBet) - parseInt(pairsBet);
-    // wallet.innerText = newWallet
-    // wallet = newWallet
-    // console.log(newWallet)
-    // console.log(wallet)
     standardBet = parseInt(standardBet)
     console.log(standardBet)
     pairsBet = parseInt(pairsBet)
-    // console.log(pairsBet)
     suitBet = parseInt(suitBet)
 
-
     wallet -= standardBet + suitBet + pairsBet
-    console.log(wallet)
+    
     return standardBet
 }
 let wallet = 20000
@@ -34,12 +27,10 @@ document.querySelector("#walletValue").innerText = wallet
 let smallBets = function(){
     if(playerHand[0].value == playerHand[1].value){
         wallet += pairsBet *10
-        console.log(wallet)
         alert("You won your pairs odds!")
     }
     if(playerHand[0].suit == playerHand[1].suit){
         wallet += suitBet *6
-        console.log(wallet)
         alert("You won your suit odds!")
     }
 }
@@ -78,9 +69,11 @@ document.querySelector(".dealCards").addEventListener("click", function(e){
     if (deckId.length == 0){
         walletStart()
         dealCards() 
+        fixWallet()
     } else {
         walletStart()
         continueGameDeal()
+        fixWallet()
     }
 });
 
@@ -132,7 +125,7 @@ let handCounter = function(){
             playerHandInitial
         );
 
-        handValueHTML.innerHTML = playerHandValue
+       
           console.log(playerHandValue)
 }
 
@@ -147,9 +140,9 @@ let dealerHandCounter = function(){
             dealerHand.forEach(e => {
                 if (e.value == "KING" || e.value == "QUEEN" || e.value == "JACK"){
                     dealerHandValues.push(10)
-                } else if (e.value == "ACE" && (dealerHandValue +11) > 21){
-                    dealerHandValues.push(1)
-                } else if (e.value == "ACE" && (dealerHandValue + 11) < 21) {
+                // } else if (e.value == "ACE" && (dealerHandValue +11) > 21){
+                //     dealerHandValues.push(1)
+                } else if (e.value == "ACE") {
                     dealerHandValues.push(11)
                 } else {
                     dealerHandValues.push(parseInt(e.value))
@@ -192,7 +185,7 @@ let dealerHandCounter = function(){
 
 
 //-----this function creates a deck from the API, grabs the deck id and then draws 2 cards for the player and 2 for the dealer. 
-//------add an if statement with deck length modifier to prevent getting new id?
+
 let dealCards = function(){
     fetch('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
     .then(response => response.json())
@@ -230,13 +223,15 @@ let continueGameDeal = function(){
     fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     .then(response => response.json())
     .then(cards => {
-        playerHand.push(cards.cards)
-        if(cards.remaining < 10){
+        
+        if(cards.remaining < 12){
             alert("sorry, its time to reshuffle the deck!")
             fetch(`http://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
             continueGameDeal()
-        }
+        } else {
+        playerHand.push(cards.cards)
         handCounter()
+        }
         })
     .then(() => {
         fetch(`http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
@@ -283,7 +278,6 @@ let resetBoard = function(){
     pairsBet = 0
     suitBet = 0
     standardBet = 0
-    handValueHTML.innerHTML = ''
     playerHand = []
     dealerHand = []
     playerHandValues = []
@@ -313,47 +307,72 @@ document.querySelector(".finishTurn").addEventListener("click", function(e){
     smallBets()
     dealerAutomation()
 })
-//pairs and same suit will be ran immediately after first deal, if not hit then they are cleared. 
 
-//player can press hit until they choose to end turn with end turn button, or draw over 21 and lose. 
 
 //after player presses end turn, the dealer will proceed with their turn drawing until soft 17. 
 let dealerAutomation = function(){
 
     if(dealerHandValue >= 17 && dealerHandValue <= 21){
         if(dealerHandValue > playerHandValue){
+            firstDraw.src = dealerHand[0].image
+            // alert("Dealer wins, better luck next time!")
+            let winTracker = document.createElement('li')
+            winTracker.innerHTML = `Player lost ${standardBet} dollars`
+            document.querySelector('.winTracker').appendChild(winTracker)
+            fixWallet()
             alert("Dealer wins, better luck next time!")
+            setTimeout(function(){ alert("Dealer wins, better luck next time!") }, 1000)
             setTimeout(function(){ resetBoard() }, 3000);
         } else if (playerHandValue > dealerHandValue){
-            alert("Congrats!, you win!")
-            console.log(wallet)
-            console.log(standardBet)
+            firstDraw.src = dealerHand[0].image
+            // alert("Congrats!, you win!")
+            setTimeout(function(){ alert("Congrats!, you win!") }, 1000)
+            let winTracker = document.createElement('li')
+            winTracker.innerHTML = `Player won ${standardBet*1.5} dollars`
+            document.querySelector('.winTracker').appendChild(winTracker)
+            fixWallet()
             wallet = wallet + (standardBet + (standardBet *1.5))
-            console.log(wallet)
-            console.log(standardBet)
+            // console.log(wallet)
+            // console.log(standardBet)
+            // alert("Congrats!, you win!")
             setTimeout(function(){ resetBoard() }, 3000);
         } else if (playerHandValue == dealerHandValue){
+            firstDraw.src = dealerHand[0].image
             wallet = wallet + standardBet
             alert("You tied with the dealer")
+            setTimeout(function(){ alert("You tied with the dealer") }, 1000)
+            let winTracker = document.createElement('li')
+            winTracker.innerHTML = `Tie!`
+            document.querySelector('.winTracker').appendChild(winTracker)
+            fixWallet()
             setTimeout(function(){ resetBoard() }, 3000)
         }
     } else if (dealerHandValue < 17){
         dealerHit()
         setTimeout(function(){ dealerAutomation() }, 1000);
+        fixWallet()
     } else if (dealerHandValue >21){
-        alert("Congrats!, you win!")
-            console.log(wallet)
-            console.log(standardBet)
-            wallet = wallet + (standardBet + (standardBet *1.5))
-            console.log(wallet)
-            console.log(standardBet)
-            setTimeout(function(){ resetBoard() }, 3000);
+        firstDraw.src = dealerHand[0].image
+        // alert("Congrats!, you win!")
+        setTimeout(function(){ alert("Congrats!, you win!") }, 1000)
+        let winTracker = document.createElement('li')
+        winTracker.innerHTML = `Player won ${standardBet*1.5} dollars`
+        document.querySelector('.winTracker').appendChild(winTracker)
+        wallet = wallet + (standardBet + (standardBet *1.5))
+        fixWallet()
+        setTimeout(function(){ resetBoard() }, 3000);
     }
     
-    firstDraw.src = dealerHand[0].image
+    // firstDraw.src = dealerHand[0].image
 }
 // if player wins, they get 3:2 odds back and money is returned to wallet. If dealer wins then player loses money and board is reset. 
 
+let fixWallet = function(){
+    document.querySelector("#walletValue").innerText = wallet
+    if(wallet <= 0){
+        alert("Sorry but it appears you've lost all of your money!")
+    }
+}
 
 
 
