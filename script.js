@@ -309,11 +309,7 @@ document.querySelector(".finishTurn").addEventListener("click", function(e){
     e.preventDefault()
     smallBets()
     dealerAutomation()
-<<<<<<< HEAD
     fixWallet()
-=======
-    // firstDraw.src = dealerHand[0].image
->>>>>>> main
 })
 
 
