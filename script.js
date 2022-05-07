@@ -25,11 +25,11 @@ document.querySelector("#walletValue").innerText = wallet
 //-----bet functions
 
 let smallBets = function(){
-    if(playerHand[0].value == playerHand[1].value){
+    if(playerHand[0].value == playerHand[1].value && pairsBet >0){
         wallet += pairsBet *10
         alert("You won your pairs odds!")
     }
-    if(playerHand[0].suit == playerHand[1].suit){
+    if(playerHand[0].suit == playerHand[1].suit && suitBet >0){
         wallet += suitBet *6
         alert("You won your suit odds!")
     }
@@ -306,6 +306,7 @@ document.querySelector(".finishTurn").addEventListener("click", function(e){
     e.preventDefault()
     smallBets()
     dealerAutomation()
+    fixWallet()
 })
 
 
