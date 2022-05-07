@@ -49,3 +49,5 @@ Still working on adding split function.
 Adding more decks is actually easy and just a swap of some words in the API fetch, decided against adding for now.
 <br>
 The wallet and tracking bets functions are still not as smooth as i'd like. 
+<br>
+The reshuffle function can bug out sometimes resulting in multiple deals. 
