@@ -17,7 +17,7 @@ let walletStart = function(){
     suitBet = parseInt(suitBet)
 
     wallet -= standardBet + suitBet + pairsBet
-    
+    fixWallet()
     return standardBet
 }
 let wallet = 20000
@@ -28,10 +28,12 @@ let smallBets = function(){
     if(playerHand[0].value == playerHand[1].value && pairsBet >0){
         wallet += pairsBet *10
         alert("You won your pairs odds!")
+        fixWallet()
     }
     if(playerHand[0].suit == playerHand[1].suit && suitBet >0){
         wallet += suitBet *6
         alert("You won your suit odds!")
+        fixWallet()
     }
 }
 
@@ -331,11 +333,11 @@ let dealerAutomation = function(){
             let winTracker = document.createElement('li')
             winTracker.innerHTML = `Player won ${standardBet*1.5} dollars`
             document.querySelector('.winTracker').appendChild(winTracker)
-            fixWallet()
             wallet = wallet + (standardBet + (standardBet *1.5))
             // console.log(wallet)
             // console.log(standardBet)
             // alert("Congrats!, you win!")
+            fixWallet()
             setTimeout(function(){ resetBoard() }, 3000);
         } else if (playerHandValue == dealerHandValue){
             firstDraw.src = dealerHand[0].image
@@ -379,10 +381,11 @@ let fixWallet = function(){
 
 let doubleDown = document.querySelector(".doubleDown").addEventListener("click", function(e){
     standardBet += standardBet
+    fixWallet()
     hitCard()
     // dealerAutomation()
     setTimeout(function(){ dealerAutomation() }, 3000);
-    return standardBet
+    // return standardBet
 })
 
 
