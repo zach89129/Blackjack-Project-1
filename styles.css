@@ -89,7 +89,7 @@ button {
     border-radius: 10px;
     transition-duration: 0.4s;
     border: none;
-    font-family: 'Bangers', cursive;
+    font-family: 'Bebas Neue', cursive;
 }
 
 button:hover {
@@ -104,7 +104,7 @@ input[type=submit]{
     border-radius: 10px;
     transition-duration: 0.4s;
     border: none;
-    font-family: 'Bangers', cursive;
+    font-family: 'Bebas Neue', cursive;
 }
 
 input[type=submit]:hover {
