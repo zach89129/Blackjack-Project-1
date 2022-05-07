@@ -320,7 +320,7 @@ let dealerAutomation = function(){
             winTracker.innerHTML = `Player lost ${standardBet} dollars`
             document.querySelector('.winTracker').appendChild(winTracker)
             fixWallet()
-            alert("Dealer wins, better luck next time!")
+            // alert("Dealer wins, better luck next time!")
             setTimeout(function(){ alert("Dealer wins, better luck next time!") }, 1000)
             setTimeout(function(){ resetBoard() }, 3000);
         } else if (playerHandValue > dealerHandValue){

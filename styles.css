@@ -1,3 +1,5 @@
+
+
 body {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
@@ -114,6 +116,8 @@ input[type=submit]:hover {
     color: white;
 }
 
+
+
 #dealerHand {
     display: flex;
     justify-content: center;
@@ -123,15 +127,16 @@ form {
     display: flex;
     flex-direction: column;
     font-size: 20px;
-    text-align: center;
+    text-align: left;
     font-family: 'Bangers', cursive;
     /* background-color: rgba(236, 29, 29, 0.755); */
 }
 
 
 
+
 input[type=text] {
-    padding:10px;
+    padding:20px;
     border:0;
     box-shadow:0 0 15px 4px rgba(250, 25, 25, 0.3);
     border-radius:10px;
@@ -146,3 +151,5 @@ img {
 #walletValue {
     font-size: 50px;
 }
+
+
