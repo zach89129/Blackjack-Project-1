@@ -385,3 +385,4 @@ let doubleDown = document.querySelector(".doubleDown").addEventListener("click",
     return standardBet
 })
 
+
