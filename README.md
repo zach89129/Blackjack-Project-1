@@ -4,8 +4,9 @@
 
 
 <img width="750" alt="Screen Shot 2022-05-06 at 11 25 54 PM" src="https://user-images.githubusercontent.com/101447294/167241809-24b5d2ed-e821-4fb6-a5b7-eb345bf8aef6.png">
+<img width="750" alt="Screen Shot 2022-05-06 at 11 35 10 PM" src="https://user-images.githubusercontent.com/101447294/167242099-92809dbb-a2c0-4436-8b74-ad39edad1631.png">
 
-<img width="750" alt="Screen Shot 2022-05-06 at 11 19 56 PM" src="https://user-images.githubusercontent.com/101447294/167241711-df7304dd-56a3-4c7a-a27b-752e3b1dd1a8.png">
+
 
 Technologies used: HTML, CSS, JavaScript, Deck of Cards API
 
