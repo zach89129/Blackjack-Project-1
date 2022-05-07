@@ -151,6 +151,7 @@ let dealerHandCounter = function(){
                 }
             })
         } else if (dealerHand.length > 2){
+            firstDraw.src = dealerHand[0].image
             let lastCard = dealerHand[dealerHand.length -1]
             let cardImage = document.createElement('img')
                 cardImage.setAttribute("src", lastCard.image)
@@ -308,6 +309,7 @@ document.querySelector(".finishTurn").addEventListener("click", function(e){
     e.preventDefault()
     smallBets()
     dealerAutomation()
+    // firstDraw.src = dealerHand[0].image
 })
 
 
