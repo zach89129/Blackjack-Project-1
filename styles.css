@@ -1,20 +1,18 @@
+
+
 body {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-columns: 1fr 4fr 160px;
     grid-template-rows: 1fr;
     min-height: 100vh;
     background-image: url("https://st2.depositphotos.com/2032035/7282/v/950/depositphotos_72827627-stock-illustration-card-suits-background.jpg)");
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: 'Bangers', cursive;
-    
+    backdrop-filter: blur(2.5px);
+    font-family: 'Bebas Neue', cursive;
 }
 
-/* .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
+
 
 .leftSide {
     grid-column-start: 1;
@@ -42,10 +40,10 @@ body {
     margin-top: 2px;
     color: rgba(236, 29, 29, 0.903);
     text-shadow:
-        0.07em 0 black,
-        0 0.07em black,
-        -0.07em 0 black,
-        0 -0.07em black;
+        8px 0 black,
+        0 8px black,
+        8px 0 black,
+        0 8px black;
     
 }
 img {
@@ -56,18 +54,19 @@ img {
    text-align: center;
    margin-top: 0px;
    margin-bottom: 5px;
-   color: rgba(236, 29, 29, 0.903);
+   color: rgba(214, 34, 34, 0.903);
    text-shadow:
-        0.07em 0 black,
-        0 0.07em black,
-        -0.07em 0 black,
-        0 -0.07em black;
+        8px 0 black,
+        0 8px black,
+        8px 0 black,
+        0 8px black;
 }
 
 .rightSide {
     grid-column-start: 3;
     flex-direction: column;
     display: flex;
+    align-items: left;
     justify-content: end;
     background-color: rgb(121, 117, 117, 0.9);
     box-shadow:0 0 15px 4px rgba(0, 0, 0, 0.76)
@@ -90,13 +89,14 @@ button {
     border-radius: 10px;
     transition-duration: 0.4s;
     border: none;
-    font-family: 'Bangers', cursive;
+    font-family: 'Bebas Neue', cursive;
 }
 
 button:hover {
     background-color: #a23535f5;
     color: white;
 }
+
 input[type=submit]{
     box-shadow:0 0 15px 4px rgba(59, 56, 56, 0.76);
     margin: 3px;
@@ -104,12 +104,16 @@ input[type=submit]{
     border-radius: 10px;
     transition-duration: 0.4s;
     border: none;
-    font-family: 'Bangers', cursive;
+    font-family: 'Bebas Neue', cursive;
 }
+
 input[type=submit]:hover {
     background-color: #a23535f5; 
     color: white;
 }
+
+
+
 #dealerHand {
     display: flex;
     justify-content: center;
@@ -117,21 +121,25 @@ input[type=submit]:hover {
 
 form {
     display: flex;
+    flex-wrap: nowrap;
     flex-direction: column;
-    font-size: 20px;
-    text-align: center;
-    font-family: 'Bangers', cursive;
+    font-size: 28px;
+    text-align: left;
+    font-family: 'Bebas Neue', cursive;
+
     /* background-color: rgba(236, 29, 29, 0.755); */
 }
 
 
 
+
 input[type=text] {
-    padding:10px;
+    padding:20px;
+    margin-top: 10px;
     border:0;
     box-shadow:0 0 15px 4px rgba(250, 25, 25, 0.3);
     border-radius:10px;
-    font-family: 'Bangers', cursive;
+    font-family: 'Bebas Neue', cursive;
 }
 
 img {
@@ -141,4 +149,7 @@ img {
 
 #walletValue {
     font-size: 50px;
+    color: rgb(16, 225, 16);
 }
+
+
