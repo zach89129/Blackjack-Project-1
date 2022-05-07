@@ -44,4 +44,4 @@ Still working on adding split function.
 <br>
 Adding more decks is actually easy and just a swap of some words in the API fetch, decided against adding for now.
 <br>
-the Wallet and tracking bets functions are still not as smooth as i'd like. 
+The wallet and tracking bets functions are still not as smooth as i'd like. 
