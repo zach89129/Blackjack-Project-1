@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-felt-dark text-white antialiased;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(18, 107, 66, 0.4) 0%, transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(13, 74, 46, 0.6) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(13, 74, 46, 0.6) 0%, transparent 40%),
+      linear-gradient(180deg, #082e1c 0%, #0d4a2e 50%, #082e1c 100%);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-casino-panel backdrop-blur-md shadow-panel;
+  }
+}

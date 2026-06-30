@@ -1,54 +1,66 @@
-# Blackjack-Project-1
+# Zach's Casino — Blackjack
 
-# https://zach89129.github.io/Blackjack-Project-1/
+A modern single-deck blackjack game built with Next.js, TypeScript, and Tailwind CSS.
 
+## Features
 
-<img width="750" alt="Screen Shot 2022-05-06 at 11 25 54 PM" src="https://user-images.githubusercontent.com/101447294/167241809-24b5d2ed-e821-4fb6-a5b7-eb345bf8aef6.png">
-<img width="750" alt="Screen Shot 2022-05-06 at 11 35 10 PM" src="https://user-images.githubusercontent.com/101447294/167242099-92809dbb-a2c0-4436-8b74-ad39edad1631.png">
+- Player vs. dealer blackjack with standard rules (dealer stands on 17)
+- Wallet system starting at $20,000
+- Side bets: Pairs (10:1) and Same Suit (6:1)
+- Double down support
+- In-app toast notifications (no alert popups)
+- Responsive layout for mobile, tablet, and desktop
+- Round history tracking
 
+## Tech Stack
 
+- **Next.js 15** (App Router)
+- **TypeScript**
+- **Tailwind CSS**
+- **Vitest** for unit tests
+- [Deck of Cards API](https://deckofcardsapi.com/) (proxied via `/api/deck`)
 
-Technologies used: HTML, CSS, JavaScript, Deck of Cards API
+## Getting Started
 
+```bash
+npm install
+npm run dev
+```
 
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Scripts
 
-**Project Description**
-<br>
-Single deck blackjack game with the ability to bet and lose "money" vs the dealer. User starts off with set amount of money, can type in the bet amount and keep track of wins/losses.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm test` | Run unit tests |
+| `npm run lint` | Run ESLint |
 
+## Deployment
 
+Recommended: deploy to [Vercel](https://vercel.com) for full Next.js support including API routes.
 
+For GitHub Pages, add `output: 'export'` to `next.config.ts` and call the Deck of Cards API directly from the client.
 
-*MVP Goals*
-<br>
-As a player I would like the game to have interactive input boxes and buttons.
-<br>
-As a player I would like to be able to keep track of my money, as well as how much i've gained or lost.
-<br>
-As a player I would like to be able to double down on my hand.
-<br>
-As a player I would like to know when I have won or lost
-<br>
+## Project Structure
 
-*Stretch Goals*
-<br>
-Add decks up to 6 (standard blackjack) as well as have multiple players
-<br>
-Have special rules/bets such as same suite or pairs for extra odds.
-<br>
-Have a split option for pairs. 
-<br>
+```
+app/           # Next.js pages and API routes
+components/    # React UI components
+hooks/         # Game state hook
+lib/game/      # Pure game logic (hand values, payouts, dealer rules)
+lib/api/       # Deck API client
+__tests__/     # Vitest unit tests
+```
 
+## Bug Fixes from Original
 
-
-*Problems/Hurdles*
-Figuring out the logic behind aces proved to be quite difficult. 
-<br>
-Still working on adding split function.
-<br>
-Adding more decks is actually easy and just a swap of some words in the API fetch, decided against adding for now.
-<br>
-The wallet and tracking bets functions are still not as smooth as i'd like. 
-<br>
-The reshuffle function can bug out sometimes resulting in multiple deals. 
+- Unified ace-aware hand value calculation
+- Fixed nested card array bug
+- Fixed reshuffle race condition with async/await
+- Fixed double down wallet deduction
+- Added bet validation against wallet balance
+- Replaced alert/setTimeout chains with state machine + toasts
