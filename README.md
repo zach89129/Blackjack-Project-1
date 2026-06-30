@@ -56,6 +56,20 @@ lib/api/       # Deck API client
 __tests__/     # Vitest unit tests
 ```
 
+## Screenshots
+
+### Desktop
+
+| Initial state | After dealing |
+|---|---|
+| ![Desktop initial](docs/screenshots/desktop-initial.png) | ![Desktop dealt](docs/screenshots/desktop-dealt.png) |
+
+### Mobile
+
+| Initial state | After dealing |
+|---|---|
+| ![Mobile initial](docs/screenshots/mobile-initial.png) | ![Mobile dealt](docs/screenshots/mobile-dealt.png) |
+
 ## Bug Fixes from Original
 
 - Unified ace-aware hand value calculation
